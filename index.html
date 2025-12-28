@@ -1,0 +1,1724 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>İntema | Müşteri Analiz Asistanı</title>
+
+  <!-- Optional font CDN (works online). App still runs offline with system fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #0b0f14;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --stroke: rgba(255,255,255,0.12);
+      --stroke2: rgba(255,255,255,0.18);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.66);
+      --muted2: rgba(255,255,255,0.50);
+      --accent: #c7f9cc;
+      --accent2: #9bf6ff;
+      --warn: #ffd6a5;
+      --good: #bdb2ff;
+      --shadow: 0 18px 50px rgba(0,0,0,0.45);
+      --shadow2: 0 10px 28px rgba(0,0,0,0.35);
+      --radius: 18px;
+      --radius2: 14px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing: border-box; }
+    html, body{ height: 100%; }
+    body{
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 20% 15%, rgba(155,246,255,0.10), transparent 55%),
+        radial-gradient(900px 600px at 80% 10%, rgba(189,178,255,0.12), transparent 60%),
+        radial-gradient(900px 700px at 50% 90%, rgba(199,249,204,0.10), transparent 55%),
+        linear-gradient(180deg, #070a0f 0%, #0b0f14 55%, #06080c 100%);
+      overflow-x: hidden;
+    }
+
+    a{ color: inherit; }
+
+    .wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 18px 46px;
+    }
+
+    header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .mark{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(155,246,255,0.25), rgba(199,249,204,0.18)),
+        rgba(255,255,255,0.06);
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow2);
+      position: relative;
+      overflow: hidden;
+    }
+    .mark::after{
+      content:"";
+      position:absolute;
+      inset:-30px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 45%);
+      transform: rotate(12deg);
+      opacity: 0.55;
+    }
+
+    .brand h1{
+      font-size: 14px;
+      margin: 0;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+    }
+    .brand .sub{
+      display:block;
+      margin-top: 2px;
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      color: var(--muted2);
+      text-transform:none;
+    }
+
+    .top-actions{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+
+    .chip{
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      font-size: 12px;
+      color: var(--muted);
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      white-space: nowrap;
+    }
+
+    .chip b{ color: rgba(255,255,255,0.86); font-weight: 600; }
+
+    .btn{
+      appearance: none;
+      border: 1px solid var(--stroke2);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.30);
+      transition: transform .12s ease, background .12s ease, border-color .12s ease, opacity .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.28); }
+    .btn:active{ transform: translateY(0px); }
+    .btn.primary{
+      border-color: rgba(199,249,204,0.35);
+      background: linear-gradient(135deg, rgba(199,249,204,0.20), rgba(155,246,255,0.12));
+    }
+    .btn.ghost{
+      background: transparent;
+      border-color: var(--stroke);
+      box-shadow: none;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .btn:disabled{
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+      .chip{ display:none; }
+    }
+
+    .panel{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel .inner{
+      padding: 18px;
+    }
+
+    .hero{
+      padding: 22px 22px 18px;
+      background:
+        radial-gradient(900px 320px at 20% 0%, rgba(155,246,255,0.12), transparent 60%),
+        radial-gradient(800px 420px at 80% 10%, rgba(189,178,255,0.12), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border-bottom: 1px solid var(--stroke);
+    }
+
+    .hero h2{
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+    .hero p{
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      max-width: 64ch;
+    }
+
+    .step{
+      display:none;
+    }
+    .step.active{
+      display:block;
+      animation: fadeIn .18s ease;
+    }
+    @keyframes fadeIn{
+      from{ opacity: 0; transform: translateY(4px); }
+      to{ opacity: 1; transform: translateY(0px); }
+    }
+
+    .welcome-card{
+      display:flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 26px 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background:
+        radial-gradient(650px 260px at 15% 0%, rgba(199,249,204,0.12), transparent 60%),
+        radial-gradient(650px 260px at 80% 20%, rgba(155,246,255,0.10), transparent 60%),
+        rgba(255,255,255,0.05);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+    }
+    .welcome-card::after{
+      content:"";
+      position:absolute;
+      inset:-30px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.06), transparent 55%),
+        radial-gradient(circle at 30% 35%, rgba(255,255,255,0.09), transparent 40%);
+      transform: rotate(7deg);
+      pointer-events:none;
+      opacity: 0.9;
+    }
+
+    .welcome-left{
+      position: relative;
+      z-index: 1;
+      max-width: 70ch;
+    }
+    .welcome-left .kicker{
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      margin-bottom: 8px;
+    }
+    .welcome-left h3{
+      margin: 0;
+      font-size: 28px;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+    .welcome-left p{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .welcome-right{
+      position: relative;
+      z-index: 1;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .mini-note{
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,0.18);
+      padding: 12px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      max-width: 320px;
+    }
+
+    .progress{
+      height: 10px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .progress > div{
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(155,246,255,0.75), rgba(199,249,204,0.75));
+      transition: width .18s ease;
+    }
+
+    .q-card{
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      box-shadow: var(--shadow2);
+      overflow: hidden;
+    }
+
+    .q-head{
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      display:flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .q-title{
+      margin: 0;
+      font-size: 16px;
+      letter-spacing: -0.01em;
+    }
+    .q-meta{
+      font-size: 12px;
+      color: var(--muted2);
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+
+    .q-body{
+      padding: 14px 16px 16px;
+    }
+
+    .options{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 560px){
+      .options{ grid-template-columns: 1fr; }
+      .welcome-card{ align-items: flex-start; flex-direction: column; }
+      .welcome-right{ align-items: flex-start; width:100%; }
+      .mini-note{ max-width: none; }
+    }
+
+    .opt{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      border-radius: 16px;
+      padding: 14px 14px 13px;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      display:flex;
+      gap: 10px;
+      align-items: flex-start;
+      position: relative;
+      min-height: 64px;
+    }
+    .opt:hover{
+      transform: translateY(-1px);
+      border-color: rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.06);
+    }
+    .opt.selected{
+      border-color: rgba(155,246,255,0.35);
+      background: linear-gradient(135deg, rgba(155,246,255,0.12), rgba(199,249,204,0.08));
+    }
+
+    .opt .badge{
+      width: 28px;
+      height: 28px;
+      border-radius: 12px;
+      border: 1px solid var(--stroke);
+      background: rgba(0,0,0,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.80);
+      flex: 0 0 auto;
+      margin-top: 1px;
+    }
+
+    .opt .txt{
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .opt .txt .label{
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      font-size: 13px;
+      margin: 0;
+    }
+    .opt .txt .desc{
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .q-actions{
+      margin-top: 14px;
+      display:flex;
+      justify-content: space-between;
+      align-items:center;
+      gap: 10px;
+    }
+    .hint{
+      font-size: 12px;
+      color: var(--muted2);
+      line-height: 1.45;
+    }
+
+    .side{
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      box-shadow: var(--shadow2);
+      overflow: hidden;
+      height: fit-content;
+    }
+    .side .s-head{
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .side .s-head h4{
+      margin: 0;
+      font-size: 13px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.74);
+    }
+    .toggle{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 7px 10px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .side .s-body{
+      padding: 14px;
+    }
+
+    .form{
+      display:grid;
+      gap: 10px;
+    }
+    .field{
+      display:grid;
+      gap: 6px;
+    }
+    .field label{
+      font-size: 12px;
+      color: var(--muted2);
+    }
+    .field input, .field textarea{
+      width: 100%;
+      border: 1px solid var(--stroke);
+      border-radius: 12px;
+      padding: 10px 11px;
+      background: rgba(0,0,0,0.18);
+      color: var(--text);
+      outline: none;
+      font-size: 13px;
+      transition: border-color .12s ease, background .12s ease;
+    }
+    .field textarea{ min-height: 92px; resize: vertical; }
+    .field input:focus, .field textarea:focus{
+      border-color: rgba(155,246,255,0.35);
+      background: rgba(0,0,0,0.22);
+    }
+
+    .mini-kpis{
+      display:grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .kpi{
+      border: 1px solid var(--stroke);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      padding: 12px 12px;
+    }
+    .kpi .t{
+      font-size: 12px;
+      color: var(--muted2);
+      margin: 0 0 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .kpi .v{
+      margin: 0;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .kpi .s{
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .result-hero{
+      padding: 22px 22px 18px;
+      border-bottom: 1px solid var(--stroke);
+      background:
+        radial-gradient(850px 320px at 20% 0%, rgba(155,246,255,0.12), transparent 60%),
+        radial-gradient(850px 320px at 80% 10%, rgba(199,249,204,0.10), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+    }
+    .result-hero .kicker{
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.74);
+      margin-bottom: 8px;
+    }
+    .result-hero h3{
+      margin: 0;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+    .result-hero p{
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 70ch;
+    }
+
+    .section{
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--stroke);
+    }
+    .section:last-child{ border-bottom: none; }
+    .section h4{
+      margin: 0 0 10px;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.76);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 700px){
+      .two-col{ grid-template-columns: 1fr; }
+    }
+
+    .info-card{
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .info-row{
+      display:flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .info-row:last-child{ border-bottom: none; padding-bottom: 0; }
+    .info-row .k{
+      font-size: 12px;
+      color: var(--muted2);
+    }
+    .info-row .v{
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.90);
+      text-align: right;
+      max-width: 60%;
+    }
+
+    .list{
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(255,255,255,0.86);
+    }
+    .list li{
+      margin: 8px 0;
+      color: rgba(255,255,255,0.86);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .note{
+      border: 1px solid rgba(255,214,165,0.28);
+      background: linear-gradient(135deg, rgba(255,214,165,0.10), rgba(255,255,255,0.03));
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    }
+    .note p{
+      margin: 0;
+      color: rgba(255,255,255,0.86);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    footer{
+      margin-top: 16px;
+      color: rgba(255,255,255,0.45);
+      font-size: 12px;
+      line-height: 1.5;
+      display:flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sr-only{
+      position:absolute;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div>
+          <h1>İntema <span class="sub">Kitchen Digital Architect Assistant</span></h1>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <div class="chip" id="chipState" title="Oturum bilgisi">
+          <span>Durum:</span> <b id="chipText">Hazır</b>
+        </div>
+        <button class="btn ghost" id="btnResetTop" type="button" title="Sıfırla">Sıfırla</button>
+      </div>
+    </header>
+
+    <!-- STEP 1: WELCOME -->
+    <section class="step active" id="stepWelcome">
+      <div class="welcome-card">
+        <div class="welcome-left">
+          <div class="kicker">Showroom modu</div>
+          <h3>Müşteri Analiz Asistanı</h3>
+          <p>
+            13 soruda müşteri niyetini ve yaşam tarzını netleştir. Sonuç ekranında persona, önerilen İntema modeli,
+            kritik özellikler ve mimar notu hazır gelsin.
+          </p>
+        </div>
+        <div class="welcome-right">
+          <div class="mini-note">
+            İpucu: Müşteri bilgilerini sağ panelden gir. “Teklifi Kaydet” ile özet JSON olarak indir ve cihazda sakla.
+          </div>
+          <button class="btn primary" id="btnStart" type="button">Analize Başla</button>
+        </div>
+      </div>
+
+      <footer>
+        <div>Tek dosya HTML. Harici bağımlılık yok. Font CDN opsiyonel.</div>
+        <div>v1.0</div>
+      </footer>
+    </section>
+
+    <!-- STEP 2: QUIZ -->
+    <section class="step" id="stepQuiz">
+      <div class="grid">
+        <div class="panel">
+          <div class="hero">
+            <h2>Analiz Akışı</h2>
+            <p>Seçeneklere tıkla. Çoklu seçim gereken soruda birden fazla seçenek işaretleyebilirsin.</p>
+          </div>
+
+          <div class="inner">
+            <div class="progress" aria-label="İlerleme">
+              <div id="progressFill"></div>
+            </div>
+
+            <div class="q-card" id="qCard">
+              <div class="q-head">
+                <div>
+                  <p class="q-meta" id="qMeta">Soru 1 / 13</p>
+                  <h3 class="q-title" id="qTitle">...</h3>
+                </div>
+                <div class="q-meta" id="qType">Tek seçim</div>
+              </div>
+
+              <div class="q-body">
+                <div class="options" id="options"></div>
+
+                <div class="q-actions">
+                  <button class="btn ghost" id="btnBack" type="button">Geri</button>
+                  <div class="hint" id="hintText">Bir seçenek seç.</div>
+                  <button class="btn primary" id="btnNext" type="button" disabled>Devam</button>
+                </div>
+              </div>
+            </div>
+
+            <footer>
+              <div>Bağlantısız kullanım için sayfayı tek dosya olarak saklayabilirsin.</div>
+              <div id="footerSmall">Seçimler: 0 / 13</div>
+            </footer>
+          </div>
+        </div>
+
+        <aside class="side" aria-label="Müşteri bilgileri">
+          <div class="s-head">
+            <h4>Müşteri Profili</h4>
+            <button class="toggle" id="toggleProfile" type="button">Gizle</button>
+          </div>
+
+          <div class="s-body" id="profileBody">
+            <div class="form">
+              <div class="field">
+                <label for="cName">Ad Soyad</label>
+                <input id="cName" type="text" placeholder="Örn: Ayşe Yılmaz" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="cPhone">Telefon</label>
+                <input id="cPhone" type="tel" placeholder="Örn: +90 5xx xxx xx xx" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="cCity">Şehir / Bölge</label>
+                <input id="cCity" type="text" placeholder="Örn: İstanbul, Ataşehir" autocomplete="off" />
+              </div>
+              <div class="field">
+                <label for="cNote">Kısa Not</label>
+                <textarea id="cNote" placeholder="Örn: Ada istiyor, evcil hayvan var, hızlı teslimat önemli"></textarea>
+              </div>
+            </div>
+
+            <div class="mini-kpis" aria-label="Anlık özet">
+              <div class="kpi">
+                <p class="t">En güçlü sinyal</p>
+                <p class="v" id="kpiSignal">Henüz yok</p>
+                <div class="s" id="kpiSignalSub">Seçimler geldikçe bu alan güncellenir.</div>
+              </div>
+              <div class="kpi">
+                <p class="t">Ön izleme</p>
+                <p class="v" id="kpiPreview">Bekleniyor</p>
+                <div class="s" id="kpiPreviewSub">Sonuç, bütçe ve stile göre tie-break ile netleşir.</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- STEP 3: RESULT -->
+    <section class="step" id="stepResult">
+      <div class="panel">
+        <div class="result-hero">
+          <div class="kicker">Persona sonucu</div>
+          <h3 id="rTitle">...</h3>
+          <p id="rSubtitle">...</p>
+        </div>
+
+        <div class="section">
+          <h4>Önerilen Model</h4>
+          <div class="two-col">
+            <div class="info-card">
+              <div class="info-row">
+                <div class="k">Model</div>
+                <div class="v" id="rModel">...</div>
+              </div>
+              <div class="info-row">
+                <div class="k">Finish</div>
+                <div class="v" id="rFinish">...</div>
+              </div>
+              <div class="info-row">
+                <div class="k">Aksesuar</div>
+                <div class="v" id="rAccessory">...</div>
+              </div>
+            </div>
+
+            <div class="info-card">
+              <div class="info-row">
+                <div class="k">Skor</div>
+                <div class="v" id="rScore">...</div>
+              </div>
+              <div class="info-row">
+                <div class="k">Tie-break</div>
+                <div class="v" id="rTie">...</div>
+              </div>
+              <div class="info-row">
+                <div class="k">Seçim Özeti</div>
+                <div class="v" id="rSummary">...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h4>Kritik Özellikler</h4>
+          <ul class="list" id="rFeatures"></ul>
+        </div>
+
+        <div class="section">
+          <h4>Mimar Notu</h4>
+          <div class="note">
+            <p id="rNote">...</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div style="display:flex; justify-content: space-between; align-items:center; gap: 12px; flex-wrap: wrap;">
+            <button class="btn ghost" id="btnRestart" type="button">Yeni Analiz</button>
+            <div style="display:flex; gap:10px; flex-wrap: wrap;">
+              <button class="btn" id="btnCopy" type="button">Özeti Kopyala</button>
+              <button class="btn primary" id="btnSave" type="button">Teklifi Kaydet</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <div>Not: Bu uygulama yerel çalışır. Kaydetme işlemi JSON indirir ve localStorage içine de yazar.</div>
+        <div id="savedCount">Kayıtlı teklif: 0</div>
+      </footer>
+    </section>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Persona Keys (10)
+    // -----------------------------
+    const PERSONAS = [
+      { key: "tech", name: "Tech Visionary" },
+      { key: "luxury", name: "Heritage Luxury" },
+      { key: "comfort", name: "Comfort Family" },
+      { key: "smart", name: "Smart Investor" },
+      { key: "gourmet", name: "Gourmet Chef" },
+      { key: "eco", name: "Eco-Soul" },
+      { key: "social", name: "Social Host" },
+      { key: "coastal", name: "Coastal Dreamer" },
+      { key: "quick", name: "Quick Fixer" },
+      { key: "nostalgic", name: "Nostalgic Romantic" },
+    ];
+
+    // -----------------------------
+    // Result Mapping (Catalog mapping)
+    // -----------------------------
+    const RESULT_MAP = {
+      tech: {
+        title: "Tech Visionary",
+        subtitle: "Modern yaşam ritmi, net hatlar ve görünmez konfor. Teknoloji, düzen ve minimalizm üzerinden ikna olur.",
+        model: "INOVA",
+        finish: "Mat Lake / Taupe",
+        accessory: "Ring Lighting (USB)",
+        features: [
+          "Modern, düz yüzey dili ve düşük görsel gürültü",
+          "Koyu tonlarla kontrast ve kontrollü aydınlatma katmanları",
+          "Akıllı depolama, net modüler akış ve hızlı kullanım",
+          "Teknoloji entegrasyonuna uygun aksesuar ekosistemi"
+        ],
+        note: "Müşterinin dili netlik ve kontrol. Kullanım senaryolarını hız üzerinden değil, akış ve ergonomi üzerinden anlat. Aydınlatma ve donanım detayları ikna edici olur."
+      },
+      luxury: {
+        title: "Heritage Luxury",
+        subtitle: "Klasik çizgi, parlaklık ve kusursuz işçilik. Detaya bakar, uzun ömür ve prestij bekler.",
+        model: "TOSCANA",
+        finish: "Gloss Lake / Porcelain Blue",
+        accessory: "Glass Buffet Cabinets",
+        features: [
+          "Klasik oran, güçlü yüzey kalitesi ve parlak finish",
+          "Vitrin ve servis odaklı düzen, sergileme alanı",
+          "Renk ve donanım ile “signature” detay",
+          "Uzun ömür ve premium hissiyat"
+        ],
+        note: "Ölçü, derz ve bitiş kalitesi üzerinden konuş. Vitrin, cam ve donanım kombinasyonunu “evin mücevheri” gibi konumlandır."
+      },
+      comfort: {
+        title: "Comfort Family",
+        subtitle: "Ev yaşar, mutfak gün boyu çalışır. Temizlik, güvenlik, düzen ve kolay alışkanlıklar öncelik.",
+        model: "SIENA / NORDA",
+        finish: "Acrylic PET / Cashmere",
+        accessory: "Pantry Mechanism & Pet Module",
+        features: [
+          "Kolay silinebilir yüzeyler ve pratik günlük kullanım",
+          "Pantry ile görünmeyen düzen ve hızlı erişim",
+          "Çocuk ve evcil hayvan senaryolarına uygun çözümler",
+          "Yumuşak mat tonlarla sakin atmosfer"
+        ],
+        note: "Anlatımı “sabah-akşam rutinleri” üzerinden kur. Temizlik ve dağınıklık sorununu mekanizma ve kategori depolama ile çözdüğünü göster."
+      },
+      smart: {
+        title: "Smart Investor",
+        subtitle: "Fiyat performans, hızlı karar, sürdürülebilir değer. Net karşılaştırma ve ölçülebilir fayda ister.",
+        model: "PRIME",
+        finish: "Melamine / White",
+        accessory: "Folding Table Mechanism",
+        features: [
+          "Yatırım bakışı için yalın, bakımı kolay yüzeyler",
+          "Stok ve modüler planla hızlı hayata geçiş",
+          "Katlanır masa ile metrekare verimliliği",
+          "Net bütçe kontrolü ve işlev odaklı seçim"
+        ],
+        note: "Bu müşteri “neden bu?” sorusunu sayılarla sever. Metrekare verimi, kullanım senaryosu ve teslimat hızını aynı pakette sun."
+      },
+      gourmet: {
+        title: "Gourmet Chef",
+        subtitle: "Mutfak bir atölye. Ergonomi, pişirme akışı ve organizasyon kalitesi kararın merkezinde.",
+        model: "INOVA",
+        finish: "High Counter",
+        accessory: "Ergonomic Dishwasher & Organizers",
+        features: [
+          "Pişirme akışı: hazırlık, pişirme, servis, temizlik hatları",
+          "Yüksek tezgah ergonomisi ve doğru yükseklik kararları",
+          "Organizer setleri ile çekmece düzeni",
+          "Bulaşık makinesi erişimi ve iş yükü azaltma"
+        ],
+        note: "Konuyu estetikten başlatma. Önce istasyon mantığı. Sonra malzeme. “Daha az adım, daha az eğilme” cümlesi çalışır."
+      },
+      eco: {
+        title: "Eco-Soul",
+        subtitle: "Doğal malzeme, sıcak doku, sürdürülebilir seçimler. Ev hissi ve vicdan aynı anda önemli.",
+        model: "NORDA",
+        finish: "Wood / Recycled PET",
+        accessory: "Micro Garden Unit",
+        features: [
+          "Ahşap ve geri dönüştürülmüş yüzey dili",
+          "Sade, sıcak ve uzun vadeli estetik",
+          "Mikro bahçe ile yaşam ve tazelik hissi",
+          "Çevreci anlatı: dayanım, bakım ve sürdürülebilirlik"
+        ],
+        note: "Malzeme hikayesini net anlat: kaynak, bakım, dayanım. “Doğru seçim” hissini güçlendir. Fazla parlaklık ve agresif kontrastı azalt."
+      },
+      social: {
+        title: "Social Host",
+        subtitle: "Mutfak bir sahne. Ada, servis, vitrin ve misafir akışı. Etkileşim ve sergileme önemli.",
+        model: "INOVA",
+        finish: "Island Layout",
+        accessory: "Wine Modules",
+        features: [
+          "Ada üzerinden sosyal akış ve yüz yüze etkileşim",
+          "Servis ve sunum alanı, vitrin modülleri",
+          "Şarap modülleri ile yaşam tarzı detayı",
+          "Aydınlatma ile atmosfer kontrolü"
+        ],
+        note: "Planı misafir senaryosuna göre anlat: giriş, ikram, servis, toplanma. Ada etrafındaki oturma ve servis çizgisini netleştir."
+      },
+      coastal: {
+        title: "Coastal Dreamer",
+        subtitle: "Ferahlık, ışık ve dinginlik. Mutfak, evin nefes aldığı yer olmalı. Renk ve ışık belirleyici.",
+        model: "FRESCA",
+        finish: "Ocean Blue",
+        accessory: "Under-window Sink",
+        features: [
+          "Açık, ferah tonlar ve gün ışığı ile uyum",
+          "Pencere önü evye ile sakin günlük ritüel",
+          "Yazlık hissi: hafif, nefes alan atmosfer",
+          "Görsel karmaşayı azaltan sade çizgiler"
+        ],
+        note: "Bu müşteriye his sat: ışık, rüzgar, ferahlık. Tezgah üstünü boş tutacak depolama kararları ile temizlik hissini pekiştir."
+      },
+      quick: {
+        title: "Quick Fixer",
+        subtitle: "Hızlı çözüm, net teslim, minimum sürpriz. Hazır sistem ve pratik aksesuarlar öne çıkar.",
+        model: "PRIME",
+        finish: "Stock",
+        accessory: "Rail Accessories",
+        features: [
+          "Stok planla hızlı teslim ve düşük risk",
+          "Ray aksesuarlarla hızlı düzen ve erişim",
+          "Basit bakım, hızlı kullanım öğrenme eğrisi",
+          "Minimum revizyonla sahaya geçiş"
+        ],
+        note: "Dili kısa tut. Takvim ver. Alternatifleri azalt. “Bugün karar ver, şu tarihte montaj” netliği satışa döner."
+      },
+      nostalgic: {
+        title: "Nostalgic Romantic",
+        subtitle: "Country dokusu, sıcak detaylar ve geleneksel his. Donanım ve dokular karakter yaratır.",
+        model: "VEGA",
+        finish: "Country",
+        accessory: "Brass Handles",
+        features: [
+          "Country çizgisi ile sıcak, samimi atmosfer",
+          "Pirinç kulplarla karakter ve el işçiliği hissi",
+          "Ahşap ve açık tonlarla ev sıcaklığı",
+          "Dekoratif ama düzenli sergileme alanları"
+        ],
+        note: "Bu müşteride detaylar satışın kalbi. Kulp, profil, vitrinin oranı. “Evin hikayesi” söylemi güçlü çalışır."
+      },
+    };
+
+    // -----------------------------
+    // Questions (13)
+    // Q4 is multi-select
+    // Points apply to persona keys above
+    // -----------------------------
+    const QUESTIONS = [
+      {
+        id: "q1",
+        title: "Proje tipi nedir?",
+        type: "single",
+        options: [
+          { id: "newHouse", label: "Yeni Ev", desc: "Yeni taşınma veya yeni inşaat.", points: { tech: 5, luxury: 5 } },
+          { id: "investment", label: "Yatırım", desc: "Kiraya verme veya satış odaklı.", points: { smart: 20 } },
+          { id: "summer", label: "Yazlık", desc: "Yazlık, sahil, sezonluk kullanım.", points: { coastal: 20 } },
+        ]
+      },
+      {
+        id: "q2",
+        title: "Zaman yaklaşımı nasıl?",
+        type: "single",
+        options: [
+          { id: "urgent", label: "Acil", desc: "Hızlı karar, hızlı uygulama.", points: { quick: 20, smart: 10 } },
+          { id: "perfection", label: "Mükemmeliyetçi", desc: "Detay, kusursuzluk, uzun karar süreci.", points: { luxury: 10, nostalgic: 5 } },
+        ]
+      },
+      {
+        id: "q3",
+        title: "Mutfak alanı nasıl?",
+        type: "single",
+        options: [
+          { id: "small", label: "Küçük", desc: "Verimlilik ve depolama optimizasyonu.", points: { smart: 10 } },
+          { id: "large", label: "Geniş", desc: "Sosyal alan ve gelişmiş pişirme.", points: { social: 15, gourmet: 10 } },
+        ]
+      },
+      {
+        id: "q4",
+        title: "Hane yapısı hangilerine uyuyor?",
+        type: "multi",
+        options: [
+          { id: "single", label: "Tek Kişi", desc: "Daha kişisel, teknolojiye açık.", points: { tech: 10 } },
+          { id: "children", label: "Çocuk", desc: "Konfor, güvenlik, düzen.", points: { comfort: 15 } },
+          { id: "pets", label: "Evcil Hayvan", desc: "Dayanım, temizlik, sürdürülebilir seçimler.", points: { eco: 10, comfort: 5 } },
+        ],
+        hint: "Birden fazla seçebilirsin."
+      },
+      {
+        id: "q5",
+        title: "Ana motivasyon ne?",
+        type: "single",
+        options: [
+          { id: "showcase", label: "Gösteriş / Sunum", desc: "Misafir ağırlama, sosyal hayat.", points: { social: 20 } },
+          { id: "cooking", label: "Pişirme", desc: "Fonksiyon, istasyon düzeni.", points: { gourmet: 20 } },
+          { id: "peace", label: "Huzur", desc: "Ferahlık ve dinginlik.", points: { coastal: 15 } },
+          { id: "heart", label: "Aile Kalbi", desc: "Rutinler, dayanım, konfor.", points: { comfort: 15 } },
+        ]
+      },
+      {
+        id: "q6",
+        title: "En büyük acı noktası ne?",
+        type: "single",
+        options: [
+          { id: "cleaning", label: "Temizlik", desc: "Kolay silinebilir, pratik.", points: { comfort: 20 } },
+          { id: "clutter", label: "Dağınıklık", desc: "Organizer ve kategori depolama.", points: { gourmet: 10 } },
+          { id: "outdated", label: "Eski görünüm", desc: "Modernleşme, teknoloji hissi.", points: { tech: 10 } },
+        ]
+      },
+      {
+        id: "q7",
+        title: "Stil tercihi hangisi?",
+        type: "single",
+        options: [
+          { id: "modern", label: "Modern", desc: "Düz yüzey, minimal çizgi.", points: { tech: 20 } },
+          { id: "classic", label: "Klasik", desc: "Zarafet, premium oranlar.", points: { luxury: 20 } },
+          { id: "country", label: "Country", desc: "Sıcak doku, nostalji.", points: { eco: 15, nostalgic: 15 } },
+          { id: "industrial", label: "Endüstriyel", desc: "Kontrast, koyu ton, metal hissi.", points: { tech: 10 } },
+        ]
+      },
+      {
+        id: "q8",
+        title: "Malzeme hissi nasıl olmalı?",
+        type: "single",
+        options: [
+          { id: "wood", label: "Ahşap", desc: "Doğal doku, sıcaklık.", points: { eco: 20 } },
+          { id: "mat", label: "Mat / Yumuşak", desc: "Sakin, konforlu yüzey.", points: { comfort: 10 } },
+          { id: "gloss", label: "High Gloss", desc: "Parlak, premium etki.", points: { luxury: 15 } },
+          { id: "dark", label: "Koyu Ton", desc: "Teknoloji ve kontrast.", points: { tech: 15 } },
+        ]
+      },
+      {
+        id: "q9",
+        title: "Pişirme tarzı nasıl?",
+        type: "single",
+        options: [
+          { id: "gourmet", label: "Gurme", desc: "Sık pişirir, istasyon ister.", points: { gourmet: 25 } },
+          { id: "practical", label: "Pratik", desc: "Hız, düzen, verim.", points: { smart: 10 } },
+        ]
+      },
+      {
+        id: "q10",
+        title: "Depolamada öncelik ne?",
+        type: "single",
+        options: [
+          { id: "pantry", label: "Pantry", desc: "Gizli düzen ve hızlı erişim.", points: { comfort: 10 } },
+          { id: "vitrine", label: "Vitrin", desc: "Sergileme, misafir odaklı kullanım.", points: { social: 15 } },
+        ]
+      },
+      {
+        id: "q11",
+        title: "Sürdürülebilirlik ne kadar önemli?",
+        type: "single",
+        options: [
+          { id: "high", label: "Çok önemli", desc: "Çevreci seçimler ve doğal hissiyat.", points: { eco: 25 } },
+          { id: "normal", label: "Normal", desc: "Dengeli yaklaşım.", points: { } },
+        ]
+      },
+      {
+        id: "q12",
+        title: "Teknoloji beklentisi nasıl?",
+        type: "single",
+        options: [
+          { id: "highTech", label: "Yüksek teknoloji", desc: "Aksesuar ve akıllı çözümler.", points: { tech: 20 } },
+          { id: "traditional", label: "Geleneksel", desc: "Zamansız alışkanlıklar.", points: { nostalgic: 15 } },
+        ]
+      },
+      {
+        id: "q13",
+        title: "Bütçe yaklaşımı nasıl?",
+        type: "single",
+        options: [
+          { id: "flexible", label: "Esnek", desc: "Premium tercih, kalite öncelik.", points: { luxury: 20 } },
+          { id: "pp", label: "Fiyat / Performans", desc: "Dengeli tercih.", points: { comfort: 10 } },
+          { id: "economic", label: "Ekonomik", desc: "Net bütçe, verim.", points: { smart: 15 } },
+        ]
+      },
+    ];
+
+    // Tie-break rule:
+    // 1) if tie on total score, compare contribution from Q13 (Budget)
+    // 2) still tie, compare contribution from Q7 (Style)
+    // 3) still tie, keep a stable priority order (PERSONAS list order)
+    const TIE_BREAK_ORDER = ["q13", "q7"];
+
+    // -----------------------------
+    // State
+    // -----------------------------
+    const state = {
+      step: "welcome",
+      index: 0,
+      answers: {}, // qId -> optionId or optionId[]
+      scores: initScoreObject(),
+      tie: {
+        q13: initScoreObject(),
+        q7: initScoreObject(),
+      }
+    };
+
+    function initScoreObject(){
+      const obj = {};
+      PERSONAS.forEach(p => obj[p.key] = 0);
+      return obj;
+    }
+
+    // -----------------------------
+    // DOM
+    // -----------------------------
+    const el = {
+      chipText: document.getElementById("chipText"),
+      btnResetTop: document.getElementById("btnResetTop"),
+
+      stepWelcome: document.getElementById("stepWelcome"),
+      stepQuiz: document.getElementById("stepQuiz"),
+      stepResult: document.getElementById("stepResult"),
+
+      btnStart: document.getElementById("btnStart"),
+
+      progressFill: document.getElementById("progressFill"),
+      qMeta: document.getElementById("qMeta"),
+      qTitle: document.getElementById("qTitle"),
+      qType: document.getElementById("qType"),
+      options: document.getElementById("options"),
+      hintText: document.getElementById("hintText"),
+      footerSmall: document.getElementById("footerSmall"),
+
+      btnBack: document.getElementById("btnBack"),
+      btnNext: document.getElementById("btnNext"),
+
+      toggleProfile: document.getElementById("toggleProfile"),
+      profileBody: document.getElementById("profileBody"),
+
+      cName: document.getElementById("cName"),
+      cPhone: document.getElementById("cPhone"),
+      cCity: document.getElementById("cCity"),
+      cNote: document.getElementById("cNote"),
+
+      kpiSignal: document.getElementById("kpiSignal"),
+      kpiSignalSub: document.getElementById("kpiSignalSub"),
+      kpiPreview: document.getElementById("kpiPreview"),
+      kpiPreviewSub: document.getElementById("kpiPreviewSub"),
+
+      rTitle: document.getElementById("rTitle"),
+      rSubtitle: document.getElementById("rSubtitle"),
+      rModel: document.getElementById("rModel"),
+      rFinish: document.getElementById("rFinish"),
+      rAccessory: document.getElementById("rAccessory"),
+      rFeatures: document.getElementById("rFeatures"),
+      rNote: document.getElementById("rNote"),
+      rScore: document.getElementById("rScore"),
+      rTie: document.getElementById("rTie"),
+      rSummary: document.getElementById("rSummary"),
+
+      btnRestart: document.getElementById("btnRestart"),
+      btnSave: document.getElementById("btnSave"),
+      btnCopy: document.getElementById("btnCopy"),
+      savedCount: document.getElementById("savedCount"),
+    };
+
+    // -----------------------------
+    // UI Helpers
+    // -----------------------------
+    function showStep(which){
+      state.step = which;
+      el.stepWelcome.classList.toggle("active", which === "welcome");
+      el.stepQuiz.classList.toggle("active", which === "quiz");
+      el.stepResult.classList.toggle("active", which === "result");
+
+      if(which === "welcome") el.chipText.textContent = "Hazır";
+      if(which === "quiz") el.chipText.textContent = "Analiz";
+      if(which === "result") el.chipText.textContent = "Sonuç";
+    }
+
+    function setProgress(){
+      const total = QUESTIONS.length;
+      const done = countAnswered();
+      const pct = Math.round((done / total) * 100);
+      el.progressFill.style.width = pct + "%";
+      el.footerSmall.textContent = `Seçimler: ${done} / ${total}`;
+    }
+
+    function countAnswered(){
+      let n = 0;
+      for(const q of QUESTIONS){
+        const a = state.answers[q.id];
+        if(q.type === "multi"){
+          if(Array.isArray(a) && a.length) n++;
+        } else {
+          if(typeof a === "string" && a) n++;
+        }
+      }
+      return n;
+    }
+
+    function questionAnswered(q){
+      const a = state.answers[q.id];
+      if(q.type === "multi") return Array.isArray(a) && a.length > 0;
+      return typeof a === "string" && a.length > 0;
+    }
+
+    function optionBadge(index){
+      const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      return alpha[index] || String(index + 1);
+    }
+
+    // -----------------------------
+    // Scoring
+    // -----------------------------
+    function resetState(){
+      state.step = "welcome";
+      state.index = 0;
+      state.answers = {};
+      state.scores = initScoreObject();
+      state.tie = { q13: initScoreObject(), q7: initScoreObject() };
+
+      el.cName.value = "";
+      el.cPhone.value = "";
+      el.cCity.value = "";
+      el.cNote.value = "";
+
+      updateSavedCount();
+      updateKPIs();
+      showStep("welcome");
+    }
+
+    function applyPoints(pointsObj, targetScores){
+      for(const [k, v] of Object.entries(pointsObj || {})){
+        if(typeof targetScores[k] === "number") targetScores[k] += v;
+      }
+    }
+
+    function rebuildScoresFromAnswers(){
+      state.scores = initScoreObject();
+      state.tie = { q13: initScoreObject(), q7: initScoreObject() };
+
+      for(const q of QUESTIONS){
+        const a = state.answers[q.id];
+        if(!a) continue;
+
+        if(q.type === "multi"){
+          if(!Array.isArray(a)) continue;
+          for(const optId of a){
+            const opt = q.options.find(o => o.id === optId);
+            if(opt){
+              applyPoints(opt.points, state.scores);
+              if(q.id === "q13") applyPoints(opt.points, state.tie.q13);
+              if(q.id === "q7") applyPoints(opt.points, state.tie.q7);
+            }
+          }
+        } else {
+          const opt = q.options.find(o => o.id === a);
+          if(opt){
+            applyPoints(opt.points, state.scores);
+            if(q.id === "q13") applyPoints(opt.points, state.tie.q13);
+            if(q.id === "q7") applyPoints(opt.points, state.tie.q7);
+          }
+        }
+      }
+    }
+
+    function getTopCandidates(){
+      let max = -Infinity;
+      for(const k in state.scores) max = Math.max(max, state.scores[k]);
+      const top = PERSONAS.map(p => p.key).filter(k => state.scores[k] === max);
+      return { max, top };
+    }
+
+    function tieBreak(candidates){
+      if(candidates.length <= 1) return candidates[0];
+
+      // 1) Budget (Q13)
+      const byQ13 = compareByTieKey(candidates, "q13");
+      if(byQ13.length === 1) return byQ13[0];
+
+      // 2) Style (Q7)
+      const byQ7 = compareByTieKey(byQ13, "q7");
+      if(byQ7.length === 1) return byQ7[0];
+
+      // 3) Stable persona order
+      const order = PERSONAS.map(p => p.key);
+      byQ7.sort((a,b) => order.indexOf(a) - order.indexOf(b));
+      return byQ7[0];
+    }
+
+    function compareByTieKey(candidates, tieKey){
+      let max = -Infinity;
+      for(const k of candidates) max = Math.max(max, state.tie[tieKey][k] || 0);
+      const best = candidates.filter(k => (state.tie[tieKey][k] || 0) === max);
+      return best;
+    }
+
+    function computeWinner(){
+      const { max, top } = getTopCandidates();
+      const winner = tieBreak(top);
+
+      const tieInfo = {
+        totalMax: max,
+        top,
+        budgetTie: top.map(k => `${k}:${state.tie.q13[k]||0}`).join("  "),
+        styleTie: top.map(k => `${k}:${state.tie.q7[k]||0}`).join("  "),
+      };
+
+      return { winner, tieInfo };
+    }
+
+    // -----------------------------
+    // Rendering quiz
+    // -----------------------------
+    function renderQuestion(){
+      const q = QUESTIONS[state.index];
+
+      el.qMeta.textContent = `Soru ${state.index + 1} / ${QUESTIONS.length}`;
+      el.qTitle.textContent = q.title;
+      el.qType.textContent = (q.type === "multi") ? "Çoklu seçim" : "Tek seçim";
+      el.hintText.textContent = q.hint || (q.type === "multi" ? "Bir veya daha fazla seç." : "Bir seçenek seç.");
+
+      // progress is based on answered count, not index
+      setProgress();
+
+      // build options
+      el.options.innerHTML = "";
+      const currentAnswer = state.answers[q.id];
+
+      q.options.forEach((opt, i) => {
+        const card = document.createElement("div");
+        card.className = "opt";
+        card.setAttribute("role", "button");
+        card.setAttribute("tabindex", "0");
+        card.dataset.optId = opt.id;
+
+        const badge = document.createElement("div");
+        badge.className = "badge";
+        badge.textContent = optionBadge(i);
+
+        const txt = document.createElement("div");
+        txt.className = "txt";
+
+        const label = document.createElement("p");
+        label.className = "label";
+        label.textContent = opt.label;
+
+        const desc = document.createElement("p");
+        desc.className = "desc";
+        desc.textContent = opt.desc || "";
+
+        txt.appendChild(label);
+        txt.appendChild(desc);
+
+        card.appendChild(badge);
+        card.appendChild(txt);
+
+        // selected state
+        if(q.type === "multi"){
+          const arr = Array.isArray(currentAnswer) ? currentAnswer : [];
+          if(arr.includes(opt.id)) card.classList.add("selected");
+        } else {
+          if(currentAnswer === opt.id) card.classList.add("selected");
+        }
+
+        card.addEventListener("click", () => onSelectOption(q, opt.id));
+        card.addEventListener("keydown", (e) => {
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            onSelectOption(q, opt.id);
+          }
+        });
+
+        el.options.appendChild(card);
+      });
+
+      // back + next buttons
+      el.btnBack.disabled = (state.index === 0);
+      el.btnNext.disabled = !questionAnswered(q);
+      el.btnNext.textContent = (state.index === QUESTIONS.length - 1) ? "Sonucu Gör" : "Devam";
+
+      updateKPIs();
+    }
+
+    function onSelectOption(question, optId){
+      if(question.type === "multi"){
+        const arr = Array.isArray(state.answers[question.id]) ? [...state.answers[question.id]] : [];
+        const idx = arr.indexOf(optId);
+        if(idx >= 0) arr.splice(idx, 1);
+        else arr.push(optId);
+        state.answers[question.id] = arr;
+      } else {
+        state.answers[question.id] = optId;
+      }
+
+      rebuildScoresFromAnswers();
+      renderQuestion(); // re-render for selected UI + next enable
+    }
+
+    function next(){
+      if(state.index === QUESTIONS.length - 1){
+        goResult();
+        return;
+      }
+      state.index = Math.min(QUESTIONS.length - 1, state.index + 1);
+      renderQuestion();
+    }
+
+    function back(){
+      state.index = Math.max(0, state.index - 1);
+      renderQuestion();
+    }
+
+    // -----------------------------
+    // KPIs preview while answering
+    // -----------------------------
+    function updateKPIs(){
+      const { max, top } = getTopCandidates();
+
+      if(max <= 0 && countAnswered() === 0){
+        el.kpiSignal.textContent = "Henüz yok";
+        el.kpiSignalSub.textContent = "Seçimler geldikçe bu alan güncellenir.";
+        el.kpiPreview.textContent = "Bekleniyor";
+        el.kpiPreviewSub.textContent = "Sonuç, bütçe ve stile göre tie-break ile netleşir.";
+        return;
+      }
+
+      const leading = top.map(k => PERSONAS.find(p => p.key === k)?.name || k);
+      el.kpiSignal.textContent = leading.join(" / ");
+      el.kpiSignalSub.textContent = `En yüksek skor: ${max}. Aday sayısı: ${top.length}.`;
+
+      const winner = tieBreak([...top]);
+      el.kpiPreview.textContent = PERSONAS.find(p => p.key === winner)?.name || winner;
+
+      const q7 = state.answers["q7"];
+      const q13 = state.answers["q13"];
+      const styleLabel = q7 ? (QUESTIONS.find(x => x.id === "q7").options.find(o => o.id === q7)?.label || "—") : "—";
+      const budgetLabel = q13 ? (QUESTIONS.find(x => x.id === "q13").options.find(o => o.id === q13)?.label || "—") : "—";
+      el.kpiPreviewSub.textContent = `Tie-break sinyalleri: Bütçe=${budgetLabel}, Stil=${styleLabel}.`;
+    }
+
+    // -----------------------------
+    // Result screen
+    // -----------------------------
+    function goResult(){
+      rebuildScoresFromAnswers();
+      const { winner, tieInfo } = computeWinner();
+      const data = RESULT_MAP[winner];
+
+      showStep("result");
+
+      el.rTitle.textContent = data.title;
+      el.rSubtitle.textContent = data.subtitle;
+
+      el.rModel.textContent = data.model;
+      el.rFinish.textContent = data.finish;
+      el.rAccessory.textContent = data.accessory;
+
+      const totalScore = state.scores[winner] ?? 0;
+      el.rScore.textContent = String(totalScore);
+
+      const budgetTie = state.tie.q13[winner] ?? 0;
+      const styleTie = state.tie.q7[winner] ?? 0;
+      el.rTie.textContent = `Bütçe katkısı: ${budgetTie}, Stil katkısı: ${styleTie}`;
+
+      el.rFeatures.innerHTML = "";
+      data.features.forEach(f => {
+        const li = document.createElement("li");
+        li.textContent = f;
+        el.rFeatures.appendChild(li);
+      });
+
+      el.rNote.textContent = data.note;
+
+      // Summary snippet
+      const answeredCount = countAnswered();
+      const customer = getCustomerProfile();
+      const shortName = customer.name ? customer.name.split(" ")[0] : "Müşteri";
+      el.rSummary.textContent = `${shortName} | ${answeredCount}/13`;
+
+      updateSavedCount();
+    }
+
+    function getCustomerProfile(){
+      return {
+        name: (el.cName.value || "").trim(),
+        phone: (el.cPhone.value || "").trim(),
+        city: (el.cCity.value || "").trim(),
+        note: (el.cNote.value || "").trim(),
+      };
+    }
+
+    function getSelectionsReadable(){
+      const parts = [];
+      for(const q of QUESTIONS){
+        const a = state.answers[q.id];
+        if(!a) continue;
+
+        if(q.type === "multi"){
+          const labels = (Array.isArray(a) ? a : [])
+            .map(id => q.options.find(o => o.id === id)?.label)
+            .filter(Boolean);
+          if(labels.length) parts.push(`${q.title} → ${labels.join(", ")}`);
+        } else {
+          const label = q.options.find(o => o.id === a)?.label;
+          if(label) parts.push(`${q.title} → ${label}`);
+        }
+      }
+      return parts;
+    }
+
+    function buildOfferObject(){
+      const { winner } = computeWinner();
+      const persona = RESULT_MAP[winner];
+
+      const now = new Date();
+      const stamp = now.toISOString();
+
+      const selections = getSelectionsReadable();
+      const profile = getCustomerProfile();
+
+      return {
+        createdAt: stamp,
+        customer: profile,
+        result: {
+          key: winner,
+          persona: persona.title,
+          score: state.scores[winner] ?? 0,
+          tieBreak: {
+            q13_budgetContribution: state.tie.q13[winner] ?? 0,
+            q7_styleContribution: state.tie.q7[winner] ?? 0
+          },
+          recommendedModel: persona.model,
+          finish: persona.finish,
+          accessory: persona.accessory,
+          criticalFeatures: persona.features,
+          architectNote: persona.note
+        },
+        selections,
+        rawScores: { ...state.scores }
+      };
+    }
+
+    function downloadJSON(obj){
+      const pretty = JSON.stringify(obj, null, 2);
+      const blob = new Blob([pretty], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+
+      const safeName = (obj.customer?.name || "musteri")
+        .toLowerCase()
+        .replaceAll("ı","i").replaceAll("ğ","g").replaceAll("ü","u").replaceAll("ş","s").replaceAll("ö","o").replaceAll("ç","c")
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 40) || "musteri";
+
+      a.download = `intema-teklif-${safeName}-${new Date().toISOString().slice(0,10)}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    }
+
+    function saveToLocalStorage(obj){
+      const key = "intema_offers_v1";
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      list.unshift(obj);
+      localStorage.setItem(key, JSON.stringify(list));
+      updateSavedCount();
+    }
+
+    function updateSavedCount(){
+      const key = "intema_offers_v1";
+      const list = JSON.parse(localStorage.getItem(key) || "[]");
+      el.savedCount.textContent = `Kayıtlı teklif: ${list.length}`;
+    }
+
+    async function copySummary(){
+      const offer = buildOfferObject();
+      const lines = [
+        `Persona: ${offer.result.persona}`,
+        `Model: ${offer.result.recommendedModel} | ${offer.result.finish}`,
+        `Aksesuar: ${offer.result.accessory}`,
+        `Skor: ${offer.result.score}`,
+        "",
+        "Seçimler:",
+        ...offer.selections.map(s => `- ${s}`),
+        "",
+        `Müşteri: ${offer.customer.name || "—"} | ${offer.customer.phone || "—"} | ${offer.customer.city || "—"}`,
+        offer.customer.note ? `Not: ${offer.customer.note}` : ""
+      ].filter(Boolean);
+
+      const text = lines.join("\n");
+
+      try{
+        await navigator.clipboard.writeText(text);
+        el.btnCopy.textContent = "Kopyalandı";
+        setTimeout(() => el.btnCopy.textContent = "Özeti Kopyala", 1100);
+      } catch(e){
+        // Fallback
+        prompt("Kopyalamak için Ctrl/Cmd + C:", text);
+      }
+    }
+
+    // -----------------------------
+    // Events
+    // -----------------------------
+    el.btnStart.addEventListener("click", () => {
+      showStep("quiz");
+      state.index = 0;
+      rebuildScoresFromAnswers();
+      renderQuestion();
+    });
+
+    el.btnNext.addEventListener("click", next);
+    el.btnBack.addEventListener("click", back);
+
+    el.btnRestart.addEventListener("click", () => {
+      // Keep customer info (useful in showroom)
+      state.answers = {};
+      rebuildScoresFromAnswers();
+      state.index = 0;
+      showStep("quiz");
+      renderQuestion();
+    });
+
+    el.btnSave.addEventListener("click", () => {
+      const offer = buildOfferObject();
+      saveToLocalStorage(offer);
+      downloadJSON(offer);
+      el.btnSave.textContent = "Kaydedildi";
+      setTimeout(() => el.btnSave.textContent = "Teklifi Kaydet", 1200);
+    });
+
+    el.btnCopy.addEventListener("click", copySummary);
+
+    el.btnResetTop.addEventListener("click", resetState);
+
+    el.toggleProfile.addEventListener("click", () => {
+      const hidden = el.profileBody.style.display === "none";
+      el.profileBody.style.display = hidden ? "block" : "none";
+      el.toggleProfile.textContent = hidden ? "Gizle" : "Göster";
+    });
+
+    // Keep KPIs fresh when typing customer info (optional)
+    ["input","change"].forEach(evt => {
+      el.cName.addEventListener(evt, () => updateKPIs());
+      el.cPhone.addEventListener(evt, () => updateKPIs());
+      el.cCity.addEventListener(evt, () => updateKPIs());
+      el.cNote.addEventListener(evt, () => updateKPIs());
+    });
+
+    // -----------------------------
+    // Init
+    // -----------------------------
+    updateSavedCount();
+    updateKPIs();
+    setProgress();
+    showStep("welcome");
+  </script>
+</body>
+</html>
