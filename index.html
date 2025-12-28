@@ -667,7 +667,7 @@
           <div class="kicker">Showroom modu</div>
           <h3>Müşteri Analiz Asistanı</h3>
           <p>
-            13 soruda müşteri niyetini ve yaşam tarzını netleştir. Sonuç ekranında persona, önerilen İntema modeli,
+            14 soruda müşteri niyetini ve yaşam tarzını netleştir. Sonuç ekranında persona, önerilen İntema modeli,
             kritik özellikler ve mimar notu hazır gelsin.
           </p>
         </div>
@@ -691,7 +691,7 @@
         <div class="panel">
           <div class="hero">
             <h2>Analiz Akışı</h2>
-            <p>Seçeneklere tıkla. Çoklu seçim gereken soruda birden fazla seçenek işaretleyebilirsin.</p>
+            <p>Seçeneklere tıkla. Her soruda tek bir yanıt seçebilirsin.</p>
           </div>
 
           <div class="inner">
@@ -702,7 +702,7 @@
             <div class="q-card" id="qCard">
               <div class="q-head">
                 <div>
-                  <p class="q-meta" id="qMeta">Soru 1 / 13</p>
+                  <p class="q-meta" id="qMeta">Soru 1 / 14</p>
                   <h3 class="q-title" id="qTitle">...</h3>
                 </div>
                 <div class="q-meta" id="qType">Tek seçim</div>
@@ -721,7 +721,7 @@
 
             <footer>
               <div>Bağlantısız kullanım için sayfayı tek dosya olarak saklayabilirsin.</div>
-              <div id="footerSmall">Seçimler: 0 / 13</div>
+              <div id="footerSmall">Seçimler: 0 / 14</div>
             </footer>
           </div>
         </div>
@@ -1007,19 +1007,19 @@
     };
 
     // -----------------------------
-    // Questions (13)
-    // Q4 is multi-select
+    // Questions (14)
     // Points apply to persona keys above
     // -----------------------------
     const QUESTIONS = [
       {
         id: "q1",
-        title: "Proje tipi nedir?",
+        title: "Proje niteliği nedir?",
         type: "single",
         options: [
-          { id: "newHouse", label: "Yeni Ev", desc: "Yeni taşınma veya yeni inşaat.", points: { tech: 5, luxury: 5 } },
-          { id: "investment", label: "Yatırım", desc: "Kiraya verme veya satış odaklı.", points: { smart: 20 } },
-          { id: "summer", label: "Yazlık", desc: "Yazlık, sahil, sezonluk kullanım.", points: { coastal: 20 } },
+          { id: "renovation", label: "Kendi evim / Tadilat", desc: "Mevcut evde yenileme.", points: { } },
+          { id: "newHouse", label: "Yeni Ev / Sıfır", desc: "Yeni taşınma veya sıfır proje.", points: { tech: 5, luxury: 5 } },
+          { id: "investment", label: "Yatırım / Stüdyo", desc: "Kiraya verme veya satış odaklı.", points: { smart: 20 } },
+          { id: "summer", label: "Yazlık / İkinci Ev", desc: "Sezonluk kullanım, ferahlık.", points: { coastal: 20 } },
         ]
       },
       {
@@ -1027,8 +1027,9 @@
         title: "Zaman yaklaşımı nasıl?",
         type: "single",
         options: [
-          { id: "urgent", label: "Acil", desc: "Hızlı karar, hızlı uygulama.", points: { quick: 20, smart: 10 } },
-          { id: "perfection", label: "Mükemmeliyetçi", desc: "Detay, kusursuzluk, uzun karar süreci.", points: { luxury: 10, nostalgic: 5 } },
+          { id: "urgent", label: "Acil / Hemen", desc: "Hızlı karar, hızlı uygulama.", points: { quick: 20, smart: 10 } },
+          { id: "standard", label: "Standart Süre", desc: "Normal akış.", points: { } },
+          { id: "perfection", label: "Mükemmeliyetçi (Zaman bol)", desc: "Detay, kusursuzluk, uzun karar süreci.", points: { luxury: 10, nostalgic: 5 } },
         ]
       },
       {
@@ -1036,30 +1037,33 @@
         title: "Mutfak alanı nasıl?",
         type: "single",
         options: [
-          { id: "small", label: "Küçük", desc: "Verimlilik ve depolama optimizasyonu.", points: { smart: 10 } },
-          { id: "large", label: "Geniş", desc: "Sosyal alan ve gelişmiş pişirme.", points: { social: 15, gourmet: 10 } },
+          { id: "small", label: "Dar / Küçük", desc: "Verimlilik ve depolama optimizasyonu.", points: { smart: 10, quick: 5 } },
+          { id: "standard", label: "Standart", desc: "Dengeli kullanım.", points: { } },
+          { id: "large", label: "Geniş / Ada Müsait", desc: "Sosyal alan ve gelişmiş pişirme.", points: { social: 15, gourmet: 10 } },
+          { id: "freedom", label: "Mimari Özgürlük", desc: "Özgür plan ve teknoloji vurgusu.", points: { tech: 10 } },
         ]
       },
       {
         id: "q4",
-        title: "Hane yapısı hangilerine uyuyor?",
-        type: "multi",
+        title: "Hane halkı nasıl?",
+        type: "single",
         options: [
-          { id: "single", label: "Tek Kişi", desc: "Daha kişisel, teknolojiye açık.", points: { tech: 10 } },
-          { id: "children", label: "Çocuk", desc: "Konfor, güvenlik, düzen.", points: { comfort: 15 } },
-          { id: "pets", label: "Evcil Hayvan", desc: "Dayanım, temizlik, sürdürülebilir seçimler.", points: { eco: 10, comfort: 5 } },
+          { id: "single", label: "Yalnız / Çift", desc: "Kişisel kullanım ve pratiklik.", points: { tech: 10, smart: 5 } },
+          { id: "children", label: "Çocuklar", desc: "Konfor, güvenlik, düzen.", points: { comfort: 15 } },
+          { id: "extended", label: "Geniş Aile / Yaşlı", desc: "Sosyal paylaşım ve konfor.", points: { comfort: 10, social: 5 } },
+          { id: "pets", label: "Evcil Hayvan", desc: "Dayanım, temizlik, sürdürülebilir seçimler.", points: { comfort: 5, eco: 10 } },
         ],
-        hint: "Birden fazla seçebilirsin."
       },
       {
         id: "q5",
         title: "Ana motivasyon ne?",
         type: "single",
         options: [
-          { id: "showcase", label: "Gösteriş / Sunum", desc: "Misafir ağırlama, sosyal hayat.", points: { social: 20 } },
-          { id: "cooking", label: "Pişirme", desc: "Fonksiyon, istasyon düzeni.", points: { gourmet: 20 } },
-          { id: "peace", label: "Huzur", desc: "Ferahlık ve dinginlik.", points: { coastal: 15 } },
-          { id: "heart", label: "Aile Kalbi", desc: "Rutinler, dayanım, konfor.", points: { comfort: 15 } },
+          { id: "showcase", label: "Vitrin (Sosyal)", desc: "Misafir ağırlama, sosyal hayat.", points: { social: 20, tech: 10 } },
+          { id: "cooking", label: "Operasyon (Yemek)", desc: "Fonksiyon, istasyon düzeni.", points: { gourmet: 20 } },
+          { id: "peace", label: "Sığınak (Huzur)", desc: "Ferahlık ve dinginlik.", points: { coastal: 15, eco: 10 } },
+          { id: "station", label: "İstasyon (Pratik)", desc: "Hız ve verim.", points: { quick: 10, smart: 10 } },
+          { id: "heart", label: "Kalp (Aile)", desc: "Rutinler, dayanım, konfor.", points: { comfort: 15, nostalgic: 10 } },
         ]
       },
       {
@@ -1067,31 +1071,32 @@
         title: "En büyük acı noktası ne?",
         type: "single",
         options: [
-          { id: "cleaning", label: "Temizlik", desc: "Kolay silinebilir, pratik.", points: { comfort: 20 } },
-          { id: "clutter", label: "Dağınıklık", desc: "Organizer ve kategori depolama.", points: { gourmet: 10 } },
-          { id: "outdated", label: "Eski görünüm", desc: "Modernleşme, teknoloji hissi.", points: { tech: 10 } },
+          { id: "clutter", label: "Dağınıklık", desc: "Organizer ve kategori depolama.", points: { gourmet: 10, comfort: 5 } },
+          { id: "cleaning", label: "Temizlik / Leke", desc: "Kolay silinebilir, pratik.", points: { comfort: 20 } },
+          { id: "outdated", label: "Demode Görünüm", desc: "Modernleşme, teknoloji hissi.", points: { tech: 10, luxury: 5 } },
+          { id: "dark", label: "Karanlık / Basık", desc: "Ferahlık ve nefes alan atmosfer.", points: { coastal: 10 } },
         ]
       },
       {
         id: "q7",
-        title: "Stil tercihi hangisi?",
+        title: "Tasarım dili hangisi?",
         type: "single",
         options: [
-          { id: "modern", label: "Modern", desc: "Düz yüzey, minimal çizgi.", points: { tech: 20 } },
-          { id: "classic", label: "Klasik", desc: "Zarafet, premium oranlar.", points: { luxury: 20 } },
-          { id: "country", label: "Country", desc: "Sıcak doku, nostalji.", points: { eco: 15, nostalgic: 15 } },
-          { id: "industrial", label: "Endüstriyel", desc: "Kontrast, koyu ton, metal hissi.", points: { tech: 10 } },
+          { id: "modern", label: "Modern & Minimal", desc: "Düz yüzey, minimal çizgi.", points: { tech: 20, gourmet: 5 } },
+          { id: "classic", label: "Klasik & Gösterişli", desc: "Zarafet, premium oranlar.", points: { luxury: 20, social: 5 } },
+          { id: "country", label: "Country & Doğal", desc: "Sıcak doku, nostalji.", points: { eco: 15, nostalgic: 15, coastal: 10 } },
+          { id: "industrial", label: "Endüstriyel", desc: "Kontrast, koyu ton, metal hissi.", points: { tech: 10, social: 10 } },
         ]
       },
       {
         id: "q8",
-        title: "Malzeme hissi nasıl olmalı?",
+        title: "Renk / Doku tercihi?",
         type: "single",
         options: [
-          { id: "wood", label: "Ahşap", desc: "Doğal doku, sıcaklık.", points: { eco: 20 } },
-          { id: "mat", label: "Mat / Yumuşak", desc: "Sakin, konforlu yüzey.", points: { comfort: 10 } },
-          { id: "gloss", label: "High Gloss", desc: "Parlak, premium etki.", points: { luxury: 15 } },
-          { id: "dark", label: "Koyu Ton", desc: "Teknoloji ve kontrast.", points: { tech: 15 } },
+          { id: "wood", label: "Doğal Ahşap", desc: "Doğal doku, sıcaklık.", points: { eco: 20, nostalgic: 10 } },
+          { id: "mat", label: "Mat / Soft", desc: "Sakin, konforlu yüzey.", points: { comfort: 10, coastal: 10 } },
+          { id: "gloss", label: "Parlak / Canlı", desc: "Parlak, premium etki.", points: { luxury: 15, social: 10 } },
+          { id: "dark", label: "Koyu / Maskülen", desc: "Teknoloji ve kontrast.", points: { tech: 15, gourmet: 5 } },
         ]
       },
       {
@@ -1099,8 +1104,9 @@
         title: "Pişirme tarzı nasıl?",
         type: "single",
         options: [
-          { id: "gourmet", label: "Gurme", desc: "Sık pişirir, istasyon ister.", points: { gourmet: 25 } },
-          { id: "practical", label: "Pratik", desc: "Hız, düzen, verim.", points: { smart: 10 } },
+          { id: "standard", label: "Standart", desc: "Günlük kullanım.", points: { comfort: 5 } },
+          { id: "gourmet", label: "Gurme Seviyesi", desc: "Sık pişirir, istasyon ister.", points: { gourmet: 25 } },
+          { id: "practical", label: "Minimum / Pratik", desc: "Hız, düzen, verim.", points: { smart: 10, quick: 10 } },
         ]
       },
       {
@@ -1108,8 +1114,9 @@
         title: "Depolamada öncelik ne?",
         type: "single",
         options: [
-          { id: "pantry", label: "Pantry", desc: "Gizli düzen ve hızlı erişim.", points: { comfort: 10 } },
-          { id: "vitrine", label: "Vitrin", desc: "Sergileme, misafir odaklı kullanım.", points: { social: 15 } },
+          { id: "standard", label: "Standart", desc: "Dengeli depolama.", points: { } },
+          { id: "pantry", label: "Kiler Sistemleri", desc: "Gizli düzen ve hızlı erişim.", points: { comfort: 10, gourmet: 10 } },
+          { id: "vitrine", label: "Vitrin / Sergileme", desc: "Sergileme, misafir odaklı kullanım.", points: { social: 15, luxury: 10 } },
         ]
       },
       {
@@ -1117,8 +1124,9 @@
         title: "Sürdürülebilirlik ne kadar önemli?",
         type: "single",
         options: [
-          { id: "high", label: "Çok önemli", desc: "Çevreci seçimler ve doğal hissiyat.", points: { eco: 25 } },
-          { id: "normal", label: "Normal", desc: "Dengeli yaklaşım.", points: { } },
+          { id: "high", label: "Çok Önemli (Eco)", desc: "Çevreci seçimler ve doğal hissiyat.", points: { eco: 25 } },
+          { id: "normal", label: "Önemli ama...", desc: "Dengeli yaklaşım.", points: { eco: 5 } },
+          { id: "low", label: "Öncelik Değil", desc: "Diğer kriterler öne çıkar.", points: { } },
         ]
       },
       {
@@ -1126,8 +1134,8 @@
         title: "Teknoloji beklentisi nasıl?",
         type: "single",
         options: [
-          { id: "highTech", label: "Yüksek teknoloji", desc: "Aksesuar ve akıllı çözümler.", points: { tech: 20 } },
-          { id: "traditional", label: "Geleneksel", desc: "Zamansız alışkanlıklar.", points: { nostalgic: 15 } },
+          { id: "highTech", label: "High-Tech Olsun", desc: "Aksesuar ve akıllı çözümler.", points: { tech: 20 } },
+          { id: "traditional", label: "Geleneksel Olsun", desc: "Zamansız alışkanlıklar.", points: { nostalgic: 15, eco: 5 } },
         ]
       },
       {
@@ -1135,9 +1143,20 @@
         title: "Bütçe yaklaşımı nasıl?",
         type: "single",
         options: [
-          { id: "flexible", label: "Esnek", desc: "Premium tercih, kalite öncelik.", points: { luxury: 20 } },
-          { id: "pp", label: "Fiyat / Performans", desc: "Dengeli tercih.", points: { comfort: 10 } },
-          { id: "economic", label: "Ekonomik", desc: "Net bütçe, verim.", points: { smart: 15 } },
+          { id: "flexible", label: "Esnek / Prestij", desc: "Premium tercih, kalite öncelik.", points: { luxury: 20, tech: 5 } },
+          { id: "pp", label: "Fiyat / Performans", desc: "Dengeli tercih.", points: { comfort: 10, gourmet: 5 } },
+          { id: "economic", label: "Ekonomik", desc: "Net bütçe, verim.", points: { smart: 15, quick: 5 } },
+        ]
+      },
+      {
+        id: "q14",
+        title: "Karar faktörü hangisi?",
+        type: "single",
+        options: [
+          { id: "design", label: "Tasarım Heyecanı", desc: "Yeni tasarım hissi belirleyici.", points: { tech: 5, luxury: 5 } },
+          { id: "trust", label: "Güven / Garanti", desc: "Uzun ömür ve güvenli seçim.", points: { comfort: 10, luxury: 5 } },
+          { id: "speed", label: "Hız", desc: "Takvim ve hızlı teslimat.", points: { quick: 15 } },
+          { id: "cost", label: "Maliyet", desc: "Net maliyet odağı.", points: { smart: 10 } },
         ]
       },
     ];
@@ -1535,7 +1554,7 @@
       const answeredCount = countAnswered();
       const customer = getCustomerProfile();
       const shortName = customer.name ? customer.name.split(" ")[0] : "Müşteri";
-      el.rSummary.textContent = `${shortName} | ${answeredCount}/13`;
+      el.rSummary.textContent = `${shortName} | ${answeredCount}/14`;
 
       updateSavedCount();
     }
