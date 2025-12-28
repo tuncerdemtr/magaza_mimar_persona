@@ -848,16 +848,16 @@
     // Persona Keys (10)
     // -----------------------------
     const PERSONAS = [
-      { key: "tech", name: "Tech Visionary" },
-      { key: "luxury", name: "Heritage Luxury" },
-      { key: "comfort", name: "Comfort Family" },
-      { key: "smart", name: "Smart Investor" },
-      { key: "gourmet", name: "Gourmet Chef" },
-      { key: "eco", name: "Eco-Soul" },
-      { key: "social", name: "Social Host" },
-      { key: "coastal", name: "Coastal Dreamer" },
-      { key: "quick", name: "Quick Fixer" },
-      { key: "nostalgic", name: "Nostalgic Romantic" },
+      { key: "tech", name: "Teknoloji Tutkunu Vizyoner" },
+      { key: "luxury", name: "Klasik Lüks Sever" },
+      { key: "comfort", name: "Konfor Odaklı Aile" },
+      { key: "smart", name: "Akıllı Yatırımcı (Micro-Living)" },
+      { key: "gourmet", name: "Gurme Şef" },
+      { key: "eco", name: "Doğal Yaşam Savunucusu" },
+      { key: "social", name: "Sosyal Ev Sahibi" },
+      { key: "coastal", name: "Dinginlik Arayan (Yazlık Ruhu)" },
+      { key: "quick", name: "Hız ve Pratiklik Odaklı" },
+      { key: "nostalgic", name: "Nostaljik Romantik" },
     ];
 
     // -----------------------------
@@ -865,144 +865,134 @@
     // -----------------------------
     const RESULT_MAP = {
       tech: {
-        title: "Tech Visionary",
-        subtitle: "Modern yaşam ritmi, net hatlar ve görünmez konfor. Teknoloji, düzen ve minimalizm üzerinden ikna olur.",
-        model: "INOVA",
-        finish: "Mat Lake / Taupe",
-        accessory: "Ring Lighting (USB)",
+        title: "Mutfak Değil, Bir Teknoloji Üssü.",
+        subtitle: "Sizin için net çizgiler, hız ve teknoloji her şeyden önce geliyor. Karmaşadan uzak, maskülen ve \"akıllı\" bir yaşam alanı arıyorsunuz.",
+        model: "INOVA (Sade, Özgüvenli ve Modern)",
+        finish: "Mat Lake (Koyu Taupe / Antrasit) veya Metal Görünümlü Yüzeyler",
+        accessory: "USB Şarjlı Ring Aydınlatma Üniteleri",
         features: [
-          "Modern, düz yüzey dili ve düşük görsel gürültü",
-          "Koyu tonlarla kontrast ve kontrollü aydınlatma katmanları",
-          "Akıllı depolama, net modüler akış ve hızlı kullanım",
-          "Teknoloji entegrasyonuna uygun aksesuar ekosistemi"
+          "Akıllı Aydınlatma: Mutfak tezgahınızda USB şarjlı Ring Aydınlatma Üniteleri.",
+          "Pürüzsüz Tasarım: Kulpsuz kapaklar ve geniş iç hacim.",
+          "Modern Düzen: Çekmece içi sensörlü LED aydınlatmalar."
         ],
-        note: "Müşterinin dili netlik ve kontrol. Kullanım senaryolarını hız üzerinden değil, akış ve ergonomi üzerinden anlat. Aydınlatma ve donanım detayları ikna edici olur."
+        note: "Numune kutusundan \"Mat Lake Koyu Taupe\" ve \"Siyah Profil\" detaylarını gösterin."
       },
       luxury: {
-        title: "Heritage Luxury",
-        subtitle: "Klasik çizgi, parlaklık ve kusursuz işçilik. Detaya bakar, uzun ömür ve prestij bekler.",
-        model: "TOSCANA",
-        finish: "Gloss Lake / Porcelain Blue",
-        accessory: "Glass Buffet Cabinets",
+        title: "Zamanın Ötesinde Bir Prestij.",
+        subtitle: "Geçici trendler değil, kalıcı değerler peşindesiniz. Detaylardaki işçilik ve malzemenin ağırlığı sizin için kalite göstergesi.",
+        model: "TOSCANA (Zamansız Klasik)",
+        finish: "Parlak Lake (Porselen Mavi / Orman Yeşili)",
+        accessory: "Camlı, büfe tarzı tezgah üstü dolaplar",
         features: [
-          "Klasik oran, güçlü yüzey kalitesi ve parlak finish",
-          "Vitrin ve servis odaklı düzen, sergileme alanı",
-          "Renk ve donanım ile “signature” detay",
-          "Uzun ömür ve premium hissiyat"
+          "Vitrin Şıklığı: Özel takımlarınızı sergileyebileceğiniz camlı, büfe tarzı tezgah üstü dolaplar.",
+          "Zengin Detaylar: Tasarımı tamamlayan şık taç ve ışık bandı detayları.",
+          "İpeksi Dokunuş: Işığı kusursuz yansıtan Parlak Lake yüzeyler."
         ],
-        note: "Ölçü, derz ve bitiş kalitesi üzerinden konuş. Vitrin, cam ve donanım kombinasyonunu “evin mücevheri” gibi konumlandır."
+        note: "Müşteriye parlak lake kapak numunesini ışığa tutarak yansıma kalitesini gösterin."
       },
       comfort: {
-        title: "Comfort Family",
-        subtitle: "Ev yaşar, mutfak gün boyu çalışır. Temizlik, güvenlik, düzen ve kolay alışkanlıklar öncelik.",
-        model: "SIENA / NORDA",
-        finish: "Acrylic PET / Cashmere",
-        accessory: "Pantry Mechanism & Pet Module",
+        title: "Hayatın Hızına Yetişen Dayanıklı Mutfak.",
+        subtitle: "Evin kalbi burası. Çocuklar, evcil dostlar ve yoğun trafik... Sizin mutfağınızın her şeye dayanıklı olması ve her zaman temiz kalması gerekiyor.",
+        model: "SIENA",
+        finish: "Mat PET (Kaşmir / Manolya)",
+        accessory: "Boy Kiler Mekanizmaları ve Mama Modülü",
         features: [
-          "Kolay silinebilir yüzeyler ve pratik günlük kullanım",
-          "Pantry ile görünmeyen düzen ve hızlı erişim",
-          "Çocuk ve evcil hayvan senaryolarına uygun çözümler",
-          "Yumuşak mat tonlarla sakin atmosfer"
+          "Leke Tutmaz Kalkan: Parmak izi bırakmayan ve çizilmelere ekstra dirençli yüzeyler.",
+          "Süper Depolama: Haftalık alışverişi rahatça sığdıran Boy Kiler Mekanizmaları.",
+          "Dost Çözümler: Evcil hayvanınız için özel mama modülü."
         ],
-        note: "Anlatımı “sabah-akşam rutinleri” üzerinden kur. Temizlik ve dağınıklık sorununu mekanizma ve kategori depolama ile çözdüğünü göster."
+        note: "Lake kapak önermeyin. PET yüzeylerin kolay temizlendiğini ve çocukların boya kalemlerine karşı daha dirençli olduğunu vurgulayın."
       },
       smart: {
-        title: "Smart Investor",
-        subtitle: "Fiyat performans, hızlı karar, sürdürülebilir değer. Net karşılaştırma ve ölçülebilir fayda ister.",
-        model: "PRIME",
-        finish: "Melamine / White",
-        accessory: "Folding Table Mechanism",
+        title: "Akıllı Metrekareler, Yüksek Değer.",
+        subtitle: "Pragmatiksiniz. Alan kısıtlı ama beklentiniz yüksek. Hedefiniz; bütçeyi yormadan, uzun ömürlü ve mekanı verimli kullanan bir çözüm.",
+        model: "PRIME (Sade ve Akılcı)",
+        finish: "Melamin (Sıcak Beyaz / Bej / Açık Gri)",
+        accessory: "Açılır Masa Mekanizması",
         features: [
-          "Yatırım bakışı için yalın, bakımı kolay yüzeyler",
-          "Stok ve modüler planla hızlı hayata geçiş",
-          "Katlanır masa ile metrekare verimliliği",
-          "Net bütçe kontrolü ve işlev odaklı seçim"
+          "Sihirli Alanlar: İhtiyaç anında çıkan, iş bitince kaybolan Açılır Masa Mekanizmaları.",
+          "Bütçe Dostu Dayanıklılık: Darbe ve çizilmeye dirençli, uzun ömürlü melamin yüzeyler.",
+          "Ölü Alan Yok: Köşeleri %100 kullandıran Kayar Köşe Mekanizmaları."
         ],
-        note: "Bu müşteri “neden bu?” sorusunu sayılarla sever. Metrekare verimi, kullanım senaryosu ve teslimat hızını aynı pakette sun."
+        note: "Açılır masa mekanizmasının videosunu veya demosunu mutlaka gösterin."
       },
       gourmet: {
-        title: "Gourmet Chef",
-        subtitle: "Mutfak bir atölye. Ergonomi, pişirme akışı ve organizasyon kalitesi kararın merkezinde.",
-        model: "INOVA",
-        finish: "High Counter",
-        accessory: "Ergonomic Dishwasher & Organizers",
+        title: "Evinizin Profesyonel Lezzet İstasyonu.",
+        subtitle: "Yemek yapmak sizin için bir sanat. Tezgahınız atölyeniz. İhtiyacınız olan şey estetikten öte, kusursuz bir operasyonel akış.",
+        model: "INOVA (+5cm Yüksek Tezgah Özelliği ile)",
+        finish: "Soft Lak veya Metal Görünümlü (Grafit / Duman Gri)",
+        accessory: "Ahşap Çekmece İçi Düzenleyiciler",
         features: [
-          "Pişirme akışı: hazırlık, pişirme, servis, temizlik hatları",
-          "Yüksek tezgah ergonomisi ve doğru yükseklik kararları",
-          "Organizer setleri ile çekmece düzeni",
-          "Bulaşık makinesi erişimi ve iş yükü azaltma"
+          "Ergonomi: Standarttan daha yüksek tezgah ile belinizi yormadan çalışma ve %20 daha fazla iç hacim.",
+          "Organizasyon: Bıçaklarınız ve baharatlarınız için özel Ahşap Çekmece İçi Düzenleyiciler.",
+          "Konfor: Eğilmeden yükleme yapabileceğiniz Ergonomik Bulaşık Makinesi Ünitesi."
         ],
-        note: "Konuyu estetikten başlatma. Önce istasyon mantığı. Sonra malzeme. “Daha az adım, daha az eğilme” cümlesi çalışır."
+        note: "Müşteriyi Inova modülünün yanına götürüp tezgah yüksekliğini deneyimletin."
       },
       eco: {
-        title: "Eco-Soul",
-        subtitle: "Doğal malzeme, sıcak doku, sürdürülebilir seçimler. Ev hissi ve vicdan aynı anda önemli.",
-        model: "NORDA",
-        finish: "Wood / Recycled PET",
-        accessory: "Micro Garden Unit",
+        title: "Doğanın Huzuru Mutfağınızda.",
+        subtitle: "Sürdürülebilirlik bir tercih değil, yaşam biçiminiz. Mutfağınız nefes almalı, doğal malzemelerle ruhunuzu dinlendirmeli.",
+        model: "NORDA (İskandinav Ruhu)",
+        finish: "Doğal Ahşap Kaplama & Geri Dönüştürülmüş Mat PET",
+        accessory: "Micro Garden Ünitesi",
         features: [
-          "Ahşap ve geri dönüştürülmüş yüzey dili",
-          "Sade, sıcak ve uzun vadeli estetik",
-          "Mikro bahçe ile yaşam ve tazelik hissi",
-          "Çevreci anlatı: dayanım, bakım ve sürdürülebilirlik"
+          "Kendi Bahçeniz: Mutfakta taze otlar ve filizler yetiştirmenizi sağlayan Micro Garden Ünitesi.",
+          "Çevre Dostu: %40'a kadar geri dönüştürülmüş malzemeden üretilen kapaklar.",
+          "Sıcak Dokunuş: Doğal ahşap açık raflar ve pastel yeşil tonları."
         ],
-        note: "Malzeme hikayesini net anlat: kaynak, bakım, dayanım. “Doğru seçim” hissini güçlendir. Fazla parlaklık ve agresif kontrastı azalt."
+        note: "Micro Garden ünitesinin aplikasyonla nasıl çalıştığını kısaca anlatın."
       },
       social: {
-        title: "Social Host",
-        subtitle: "Mutfak bir sahne. Ada, servis, vitrin ve misafir akışı. Etkileşim ve sergileme önemli.",
-        model: "INOVA",
-        finish: "Island Layout",
-        accessory: "Wine Modules",
+        title: "Sadece Yemek Değil, Sohbet Pişirilen Yer.",
+        subtitle: "Mutfak sizin sahneniz. Dostlarınızla kadeh kaldırdığınız, yemek yaparken sohbetin kesilmediği, salonla bütünleşen bir alan hayal ediyorsunuz.",
+        model: "INOVA (Ada Yerleşimi ve Açık Mutfak Stili)",
+        finish: "Kontrast Renkler (Örn: Ada Koyu Ceviz, Dolaplar Kaşmir)",
+        accessory: "Metal Açık Raf Sistemleri",
         features: [
-          "Ada üzerinden sosyal akış ve yüz yüze etkileşim",
-          "Servis ve sunum alanı, vitrin modülleri",
-          "Şarap modülleri ile yaşam tarzı detayı",
-          "Aydınlatma ile atmosfer kontrolü"
+          "Sosyal Ada: Yemek hazırlarken misafirlerinizi ağırlayabileceğiniz bar konseptli ada yerleşimi.",
+          "Sergileme: Şık kadehleriniz ve aksesuarlarınız için Metal Açık Raf Sistemleri.",
+          "Atmosfer: Ortamın modunu değiştiren ayarlanabilir (dimmerli) LED aydınlatmalar."
         ],
-        note: "Planı misafir senaryosuna göre anlat: giriş, ikram, servis, toplanma. Ada etrafındaki oturma ve servis çizgisini netleştir."
+        note: "Müşteriye ada etrafında nasıl bir sosyal alan kurgulayabileceğinizi çizerek gösterin."
       },
       coastal: {
-        title: "Coastal Dreamer",
-        subtitle: "Ferahlık, ışık ve dinginlik. Mutfak, evin nefes aldığı yer olmalı. Renk ve ışık belirleyici.",
-        model: "FRESCA",
-        finish: "Ocean Blue",
-        accessory: "Under-window Sink",
+        title: "Her Gün Tatil Sabahına Uyanmak Gibi.",
+        subtitle: "Şehrin griliğinden kaçış arıyorsunuz. Mutfağınız size bir sahil evinin ferahlığını, denizin mavisini ve Akdeniz'in sakinliğini vermeli.",
+        model: "FRESCA (Akdeniz Esintisi)",
+        finish: "Mat PET (Okyanus Mavi / Ada Çayı Yeşili / Buz Beyaz)",
+        accessory: "Cam Önü Eviye Yerleşimi",
         features: [
-          "Açık, ferah tonlar ve gün ışığı ile uyum",
-          "Pencere önü evye ile sakin günlük ritüel",
-          "Yazlık hissi: hafif, nefes alan atmosfer",
-          "Görsel karmaşayı azaltan sade çizgiler"
+          "Özgün Doku: Kapaklardaki dikey çizgili doku ile modern ve rahatlatıcı bir etki.",
+          "Manzara Keyfi: Bahçeye veya dışarıya bakmanızı sağlayan Cam Önü Eviye Yerleşimi.",
+          "Doğal Detaylar: Hasır sepetler ve ahşap aksesuarlarla tamamlanan açık raflar."
         ],
-        note: "Bu müşteriye his sat: ışık, rüzgar, ferahlık. Tezgah üstünü boş tutacak depolama kararları ile temizlik hissini pekiştir."
+        note: "Fresca'nın çizgili kapak dokusuna dokunmalarını sağlayın."
       },
       quick: {
-        title: "Quick Fixer",
-        subtitle: "Hızlı çözüm, net teslim, minimum sürpriz. Hazır sistem ve pratik aksesuarlar öne çıkar.",
-        model: "PRIME",
-        finish: "Stock",
-        accessory: "Rail Accessories",
+        title: "Beklemeden Yeni Mutfağınıza Kavuşun.",
+        subtitle: "Kararınızı verdiniz ve sonuç istiyorsunuz. Tadilat süreci gözünüzde büyümesin; sizin için hız, pratiklik ve hemen kullanım önemli.",
+        model: "PRIME (Hızlı ve Standart)",
+        finish: "Stoklu Laminant ve Polimerik Renkler",
+        accessory: "Raylı Aksesuar Setleri",
         features: [
-          "Stok planla hızlı teslim ve düşük risk",
-          "Ray aksesuarlarla hızlı düzen ve erişim",
-          "Basit bakım, hızlı kullanım öğrenme eğrisi",
-          "Minimum revizyonla sahaya geçiş"
+          "Hızlı Teslimat: \"3 Haftada Teslim\" edilebilen Laminant Tezgah seçenekleri.",
+          "Kolay Montaj: Hızla kurulabilen modüler sistemler.",
+          "Pratik Aksesuarlar: Delme/kırma gerektirmeyen, tezgaha asılan Raylı Aksesuar Setleri."
         ],
-        note: "Dili kısa tut. Takvim ver. Alternatifleri azalt. “Bugün karar ver, şu tarihte montaj” netliği satışa döner."
+        note: "Takvim üzerinden net teslimat tarihi vererek satışı hemen kapatmayı deneyin."
       },
       nostalgic: {
-        title: "Nostalgic Romantic",
-        subtitle: "Country dokusu, sıcak detaylar ve geleneksel his. Donanım ve dokular karakter yaratır.",
-        model: "VEGA",
-        finish: "Country",
-        accessory: "Brass Handles",
+        title: "Geçmişin Sıcaklığı, Bugünün Konforu.",
+        subtitle: "Modernizmin soğukluğu size göre değil. Siz \"yaşanmışlık\" hissi veren, anne mutfağı sıcaklığında, duygusal bağ kurabileceğiniz bir yer istiyorsunuz.",
+        model: "VEGA (Country / Vintage Stil)",
+        finish: "Polimerik / Mat Lake (Manolya / Baltık Mavi)",
+        accessory: "Pirinç veya eskitme kulplar",
         features: [
-          "Country çizgisi ile sıcak, samimi atmosfer",
-          "Pirinç kulplarla karakter ve el işçiliği hissi",
-          "Ahşap ve açık tonlarla ev sıcaklığı",
-          "Dekoratif ama düzenli sergileme alanları"
+          "Karakteristik Detaylar: Vintage ruhunu yansıtan pirinç veya eskitme kulplar.",
+          "Sıcak Atmosfer: Çerçeveli kapaklar ve vitrinli dolaplarla \"Country\" havası.",
+          "Geleneksel Düzen: Baharatlıklar ve açık raflarla samimi bir yerleşim."
         ],
-        note: "Bu müşteride detaylar satışın kalbi. Kulp, profil, vitrinin oranı. “Evin hikayesi” söylemi güçlü çalışır."
+        note: "Pirinç kulp seçeneklerini ve çerçeveli kapak detayını yakından gösterin."
       },
     };
 
